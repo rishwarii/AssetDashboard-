@@ -21,7 +21,16 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Nagarro</span>
+          <span className="logo">
+            <div>
+              <img
+                height="130"
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c0/Nagarro_logo_new.svg/1280px-Nagarro_logo_new.svg.png"
+                alt=""
+                className="avatar"
+              />
+            </div>
+          </span>
         </Link>
       </div>
       <hr />
@@ -36,16 +45,16 @@ const Sidebar = () => {
           </Link>
 
           <p className="title">LISTS</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
+          <Link to="/assetList" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
-              <span>Users</span>
+              <span>Asset List</span>
             </li>
           </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/login" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>Products</span>
+              <span>Login</span>
             </li>
           </Link>
           <li>

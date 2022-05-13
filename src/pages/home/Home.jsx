@@ -7,19 +7,17 @@ import Chart from "../../components/chart/Chart";
 import Table from "../../components/table/Table";
 import Asset from "../../Assets";
 import AssetList from "../../Assets";
-import Table2 from "../../components/table/Table2";
+import DataTable from "../../components/datatable/DataTable";
+
 import Map from "../../components/map/Map";
-import Datatable from "../../components/datatable/Datatable";
+import Datatable from "../../components/datatable/DataTable";
 const Home = () => {
   return (
     <div className="home">
       <Sidebar />
       <div className="homeContainer">
         <Navbar />
-        <div className="listContainer">
-          <div className="listTitle"></div>
-          <Table></Table>
-        </div>
+        <div className="listContainer"></div>
       </div>
     </div>
   );
