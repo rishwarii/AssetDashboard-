@@ -4,6 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
+import AssetList from "../list/AssetList";
 
 import axios from "axios";
 
@@ -37,7 +38,6 @@ const NewAsset = () => {
     deviceSerialNumber: "",
     endLocationLatitude: "",
     endLocationLongitude: "",
-    expectedDeliveryDateTime: "",
     startLocationLatitude: "",
     startLocationLongitude: "",
   });
@@ -49,13 +49,15 @@ const NewAsset = () => {
       ...newAsset,
       [e.target.name]: e.target.value,
     });
+
+    // console.log(newAsset);
   }
 
   async function onFormSubmit(e) {
     e.preventDefault();
     try {
       await axios.post(
-        `https://4n53lh55nc.execute-api.ap-south-1.amazonaws.com/prod/assets`,
+        `https://4n53lh55nc.execute-api.ap-south-1.amazonaws.com/prod/asset`,
         newAsset
       );
       setStatus(true);
@@ -65,7 +67,11 @@ const NewAsset = () => {
   }
 
   if (status) {
-    return <div>Loading ... </div>;
+    return (
+      <div>
+        <AssetList></AssetList>
+      </div>
+    );
   }
 
   return (
@@ -87,7 +93,6 @@ const NewAsset = () => {
               >
                 <Grid item xs={6}>
                   <Item>
-                    {" "}
                     <div className="formInput">
                       <TextField
                         autoComplete="assetName"
@@ -122,30 +127,118 @@ const NewAsset = () => {
                   <Item>
                     <div className="formInput">
                       <TextField
-                        autoComplete="assetType"
-                        name="assetType"
+                        autoComplete="deviceSerialNumber"
+                        name="deviceSerialNumber"
                         variant="outlined"
                         required
                         fullWidth
-                        id="assetType"
-                        label="assetType"
+                        id="deviceSerialNumber"
+                        label="deviceSerialNumber"
                         onChange={(e) => onTextFieldChange(e)}
                       />
                     </div>
                   </Item>
                 </Grid>
                 <Grid item xs={6}>
-                  <Item>4</Item>
+                  <Item>
+                    <div className="formInput">
+                      <TextField
+                        autoComplete="assetType"
+                        name="assetType"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="assetType"
+                        label=" Asset Type"
+                        onChange={(e) => onTextFieldChange(e)}
+                      />
+                    </div>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <div className="formInput">
+                      <TextField
+                        autoComplete="endLocationLatitude"
+                        name="endLocationLatitude"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="endLocationLatitude"
+                        label="End Location Latitude"
+                        onChange={(e) => onTextFieldChange(e)}
+                      />
+                    </div>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <div className="formInput">
+                      <TextField
+                        autoComplete="endLocationLongitude"
+                        name="endLocationLongitude"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="endLocationLongitude"
+                        label=" endLocationLongitude"
+                        onChange={(e) => onTextFieldChange(e)}
+                      />
+                    </div>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <div className="formInput">
+                      <TextField
+                        autoComplete="startLocationLatitude"
+                        name="startLocationLatitude"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="startLocationLatitude"
+                        label=" startLocationLatitude"
+                        onChange={(e) => onTextFieldChange(e)}
+                      />
+                    </div>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <div className="formInput">
+                      <TextField
+                        autoComplete="startLocationLongitude"
+                        name="startLocationLongitude"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="startLocationLongitude"
+                        label=" Asset startLocationLongitude"
+                        onChange={(e) => onTextFieldChange(e)}
+                      />
+                    </div>
+                  </Item>
                 </Grid>
               </Grid>
               {/* 
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
+                  <label>{input.label}</label> 
                   <input type={input.type} placeholder={input.placeholder} />
                 </div>
               ))} */}
-              <button>Send</button>
+              <Box m={3}>
+                <Button
+                  width="150px"
+                  type="submit"
+                  align="center"
+                  variant="contained"
+                  color="primary"
+                  onClick={(e) => onFormSubmit(e)}
+                >
+                  Add Asset
+                </Button>
+              </Box>
             </form>
           </div>
         </div>

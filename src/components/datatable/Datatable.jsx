@@ -35,6 +35,12 @@ const DataTable = () => {
     setisLoading(false);
   }, []);
 
+  //handle delelte function
+
+  // const handleDelete = async => {
+  //    await axios.delete("https://4n53lh55nc.execute-api.ap-south-1.amazonaws.com/prod/asset?assetSerialNumber=asset0003&assetName=Car0003")
+  // }
+
   const actionColumn = [
     {
       field: "action",
