@@ -13,10 +13,8 @@ import { useParams } from "react-router-dom";
 import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
-  const { darkMode } = useContext(DarkModeContext);
-
   return (
-    <div className={darkMode ? "app dark" : "app"}>
+    <div className="app">
       <BrowserRouter>
         <Routes>
           <Route path="/">

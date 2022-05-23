@@ -1,83 +1,80 @@
-import React, { useState, useEffect } from "react";
-import {
-  withGoogleMap,
-  withScriptjs,
-  GoogleMap,
-  Marker,
-  InfoWindow,
-} from "react-google-maps";
-import mapStyles from "./mapStyles";
+import React from "react";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { Marker } from "@react-google-maps/api";
+import "../../pages/single/Single";
+import LocationMarker from "../locationMarker/locationMarker";
+import "./map.scss";
+import CircularColor from "../loading-spinner/LoadingSpinner";
+import axios from "axios";
+import { useState, useEffect, useRef } from "react";
 
-function Map() {
-  const [selectedPark, setSelectedPark] = useState(null);
+const mapContainerStyle = {
+  width: "500px",
+  height: "300px",
+};
+
+const center = {
+  lat: 27.1753738514716,
+  lng: 78.04209928206996,
+};
+
+//TODO: Add if check foe device id / client id
+
+const MapsComponentDash = () => {
+  const [AllAsset, setAllAsset] = useState([]);
+  const [Loading, setLoading] = useState(false);
+  const componentMounted = useRef(true); // (3) component is mounted
 
   useEffect(() => {
-    const listener = (e) => {
-      if (e.key === "Escape") {
-        setSelectedPark(null);
-      }
-    };
-    window.addEventListener("keydown", listener);
+    async function getAllAssets() {
+      try {
+        setLoading(true);
+        const AllAsset = await axios.get(
+          " https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/allassets"
+        );
+        if (componentMounted.current) {
+          setAllAsset(AllAsset.data);
+          setLoading(false);
+        }
 
-    return () => {
-      window.removeEventListener("keydown", listener);
-    };
+        return () => {
+          // This code runs when component is unmounted
+          componentMounted.current = false;
+        };
+      } catch (error) {
+        console.log("ERROR DMAp");
+      }
+    }
+    getAllAssets();
+    setLoading(false);
   }, []);
 
-  return (
-    <GoogleMap
-      defaultZoom={10}
-      defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
-      defaultOptions={{ styles: mapStyles }}
-    >
-      {parkData.features.map((park) => (
-        <Marker
-          key={park.properties.PARK_ID}
-          position={{
-            lat: park.geometry.coordinates[1],
-            lng: park.geometry.coordinates[0],
-          }}
-          onClick={() => {
-            setSelectedPark(park);
-          }}
-          icon={{
-            url: `/skateboarding.svg`,
-            scaledSize: new window.google.maps.Size(25, 25),
-          }}
-        />
-      ))}
-
-      {selectedPark && (
-        <InfoWindow
-          onCloseClick={() => {
-            setSelectedPark(null);
-          }}
-          position={{
-            lat: selectedPark.geometry.coordinates[1],
-            lng: selectedPark.geometry.coordinates[0],
-          }}
+  //TODO: add spiiner for loading
+  return Loading ? (
+    <CircularColor />
+  ) : (
+    <div className="mapDash">
+      <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
+        <GoogleMap
+          id="marker-example"
+          mapContainerStyle={mapContainerStyle}
+          zoom={5}
+          center={center}
         >
-          <div>
-            <h2>{selectedPark.properties.NAME}</h2>
-            <p>{selectedPark.properties.DESCRIPTIO}</p>
-          </div>
-        </InfoWindow>
-      )}
-    </GoogleMap>
-  );
-}
-
-const MapWrapped = withScriptjs(withGoogleMap(Map));
-
-export default function App() {
-  return (
-    <div style={{ width: "100vw", height: "100vh" }}>
-      <MapWrapped
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
-        loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `100%` }} />}
-        mapElement={<div style={{ height: `100%` }} />}
-      />
+          {AllAsset.map((marker, i) => (
+            <Marker
+              key={i}
+              title={`Device ID : ${marker.ClientID}`}
+              position={{
+                lat: parseFloat(marker.Latitude),
+                lng: parseFloat(marker.Longitude),
+              }}
+            ></Marker>
+          ))}
+        </GoogleMap>
+      </LoadScript>
     </div>
   );
-}
+};
+
+export default MapsComponentDash;

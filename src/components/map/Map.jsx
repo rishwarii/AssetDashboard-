@@ -1,36 +1,71 @@
-import React from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
-import { Marker } from "@react-google-maps/api";
-import "../../pages/single/Single";
+// import React from "react";
+// import { useMemo, useState, useEffect } from "react";
 
-const containerStyle = {
-  width: "1000px",
-  height: "400px",
-};
+// import { GoogleMap, LoadScript } from "@react-google-maps/api";
+// import { Marker } from "@react-google-maps/api";
+// import "../../pages/single/Single";
+// import LocationMarker from "../locationMarker/locationMarker";
 
-// https://react-google-maps-api-docs.netlify.app/
+// const mapContainerStyle = {
+//   width: "1000px",
+//   height: "400px",
+// };
 
-const MapsComponent = (latitude, longitude) => {
-  // const position = {
-  //   latitude: parseFloat(props.latitude),
-  //   longitude: parseFloat(props.longitude),
-  // };
+// const center = {
+//   lat: 0,
+//   lng: -180,
+// };
 
-  const center = {
-    lat: 0,
-    lng: -180,
-  };
-  const onLoad = (marker) => {
-    console.log("marker: ", marker);
+// //TODO: Add if check foe device id / client id
+// // const MapsComponent = ({ addBluePath, positionStart, positionEnd }) => {
 
-    return (
-      <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-          <Marker onLoad={onLoad} lat={latitude} lon={longitude} />
-        </GoogleMap>
-      </LoadScript>
-    );
-  };
-};
+// const MapsComponent = ({}) => {
+//   const [AllAsset, setAllAsset] = useState([]);
+//   const [Loading, setLoading] = useState(false);
 
-export default MapsComponent;
+//   useEffect(() => {
+//     async function getAllAssets() {
+//       try {
+//         setLoading(true);
+//         const AllAsset = await axios.get(
+//           " https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/allassets"
+//         );
+//         setAllAsset(AllAsset.data);
+//       } catch (error) {
+//         console.log("ERROR DMAp");
+//       }
+//     }
+//     getAllAssets();
+//     setLoading(false);
+//   }, []);
+
+//   console.log(AllAsset.data);
+
+//   const onLoad = (marker) => {
+//     // console.log("marker: ", marker);
+//   };
+
+//   //TODO: add spiiner for loading
+//   return (
+//     <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
+//       <GoogleMap
+//         id="marker-example"
+//         mapContainerStyle={mapContainerStyle}
+//         zoom={3}
+//         center={center}
+//       >
+//         {/* {AllAsset.map((marker,i)=>(
+//           <Marker
+//           key={i}
+//           position={
+//             {
+//               lat:
+//             }
+//           }></Marker>
+//         ))} */}
+//       </GoogleMap>
+//     </LoadScript>
+//   );
+// };
+
+// export default MapsComponent;

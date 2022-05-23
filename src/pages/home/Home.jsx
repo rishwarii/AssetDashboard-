@@ -8,16 +8,21 @@ import Table from "../../components/table/Table";
 import Asset from "../../Assets";
 import AssetList from "../../Assets";
 import DataTable from "../../components/datatable/DataTable";
-
+import MapsComponentDash from "../../components/map/dasboardMap";
 import Map from "../../components/map/Map";
 import Datatable from "../../components/datatable/DataTable";
+import MiniDrawer from "../../components/sidebar/sidebar2coll2";
+
 const Home = () => {
   return (
     <div className="home">
-      <Sidebar />
+      <MiniDrawer />
       <div className="homeContainer">
-        <Navbar />
-        <div className="listContainer"></div>
+        <div className="listContainer">
+          <div className="listTitle">All Asset Location</div>
+          <MapsComponentDash></MapsComponentDash>
+        </div>
+        <div className="widgets"></div>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const DataTable = () => {
   const [Assets, setAssets] = useState([]);
@@ -68,13 +69,7 @@ const DataTable = () => {
     },
   ];
 
-  return isLoading ? (
-    <div className="loader">
-      <Box sx={{ display: "flex" }}>
-        <CircularProgress color="secondary" />
-      </Box>
-    </div>
-  ) : (
+  return (
     <div className="datatable">
       <div className="datatableTitle">
         Asset List
@@ -82,14 +77,26 @@ const DataTable = () => {
           Add New
         </Link>
       </div>
-      <DataGrid
-        getRowId={(row) => row.assetName}
-        className="datagrid"
-        rows={Assets}
-        columns={columns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-      />
+      {isLoading ? (
+        <div className="loader">
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress color="secondary" />
+          </Box>
+        </div>
+      ) : (
+        <DataGrid
+          getRowId={(row) => row.assetName}
+          className="datagrid"
+          components={{
+            LoadingOverlay: LinearProgress,
+          }}
+          rows={Assets}
+          columns={columns.concat(actionColumn)}
+          pageSize={9}
+          rowsPerPageOptions={[9]}
+          loading={isLoading}
+        />
+      )}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import AssetList from "../list/AssetList";
+import MiniDrawer from "../../components/sidebar/sidebar2coll2";
 
 import axios from "axios";
 
@@ -23,7 +24,7 @@ import {
 //   const [file, setFile] = useState("");
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: "#0a1929",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
@@ -75,10 +76,9 @@ const NewAsset = () => {
   }
 
   return (
-    <div className="new">
-      <Sidebar />
+    <div>
+      <MiniDrawer />
       <div className="newContainer">
-        <Navbar />
         <div className="top">
           <h1>Add New Asset </h1>
         </div>
@@ -220,13 +220,22 @@ const NewAsset = () => {
                   </Item>
                 </Grid>
               </Grid>
-              {/* 
-              {inputs.map((input) => (
-                <div className="formInput" key={input.id}>
-                  <label>{input.label}</label> 
-                  <input type={input.type} placeholder={input.placeholder} />
-                </div>
-              ))} */}
+              <Grid item xs={6}>
+                <Item>
+                  <div className="formInput">
+                    <TextField
+                      autoComplete="expectedDeliveryDateTime"
+                      name="expectedDeliveryDateTime"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="expectedDeliveryDateTime"
+                      label=" expectedDeliveryDateTime"
+                      onChange={(e) => onTextFieldChange(e)}
+                    />
+                  </div>
+                </Item>
+              </Grid>
               <Box m={3}>
                 <Button
                   width="150px"
