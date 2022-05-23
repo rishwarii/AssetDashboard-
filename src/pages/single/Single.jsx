@@ -23,6 +23,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
   GoogleMap,
   InfoWindow,
+  Polyline,
   useLoadScript,
   Marker,
   LoadScript,
@@ -112,6 +113,12 @@ const Single = () => {
     // console.log("marker: ", marker);
   };
 
+  const lineSymbol = {
+    path: "M 0,-1 0,1",
+    strokeOpacity: 1,
+    scale: 4,
+  };
+
   const center = {
     lat: 27.1753738514716,
     lng: 78.04209928206996,
@@ -120,6 +127,11 @@ const Single = () => {
   const mapContainerStyle = {
     width: "1000px",
     height: "400px",
+  };
+
+  const mapContainerRight = {
+    width: "700px",
+    height: "350px",
   };
 
   return (
@@ -151,21 +163,49 @@ const Single = () => {
             </div>
           </div>
           <div className="right">
+            <h1 className="title">Start and End Location</h1>
             {/* <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" /> */}
+            <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
+              <GoogleMap
+                id="marker-example"
+                mapContainerStyle={mapContainerRight}
+                zoom={2}
+                center={center}
+              >
+                <Marker
+                  label="Start Position"
+                  position={positionStart}
+                ></Marker>
+                <Marker label="End Position" position={positionEnd}></Marker>
+                <Polyline
+                  geodesic="true"
+                  strokeColor="#0000D1"
+                  icons={[
+                    {
+                      icon: lineSymbol,
+                      offset: "0",
+                      repeat: "20px",
+                    },
+                  ]}
+                  strokeOpacity="1.0"
+                  strokeWeight="2"
+                  path={[positionStart, positionEnd]}
+                ></Polyline>
+              </GoogleMap>
+            </LoadScript>
           </div>
         </div>
 
         {/* for the time putting map here will make component when get api single  */}
         <div className="bottom">
           <div>{}</div>
-          <h1 className="title">Map Location</h1>
-          {/* <MapsComponent addBluePath={addBluePath}></MapsComponent> */}
+          <h1 className="title">Location History</h1>
           <div className="map">
             <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
               <GoogleMap
                 id="marker-example"
                 mapContainerStyle={mapContainerStyle}
-                zoom={12}
+                zoom={15}
                 center={center}
               >
                 {addBluePath.map((marker, i) => (
