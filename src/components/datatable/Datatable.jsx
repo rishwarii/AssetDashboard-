@@ -31,9 +31,9 @@ const DataTable = () => {
       );
       // console.log(Assets.data.assets);
       setAssets(Assets.data.assets);
+      setisLoading(false);
     }
     getAllAssets();
-    setisLoading(false);
   }, []);
 
   //handle delelte function
@@ -69,7 +69,13 @@ const DataTable = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <div className="loader">
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress color="secondary" />
+      </Box>
+    </div>
+  ) : (
     <div className="datatable">
       <div className="datatableTitle">
         Asset List
@@ -77,26 +83,18 @@ const DataTable = () => {
           Add New
         </Link>
       </div>
-      {isLoading ? (
-        <div className="loader">
-          <Box sx={{ display: "flex" }}>
-            <CircularProgress color="secondary" />
-          </Box>
-        </div>
-      ) : (
-        <DataGrid
-          getRowId={(row) => row.assetName}
-          className="datagrid"
-          components={{
-            LoadingOverlay: LinearProgress,
-          }}
-          rows={Assets}
-          columns={columns.concat(actionColumn)}
-          pageSize={9}
-          rowsPerPageOptions={[9]}
-          loading={isLoading}
-        />
-      )}
+      <DataGrid
+        getRowId={(row) => row.assetName}
+        className="datagrid"
+        components={{
+          LoadingOverlay: LinearProgress,
+        }}
+        rows={Assets}
+        columns={columns.concat(actionColumn)}
+        pageSize={9}
+        rowsPerPageOptions={[9]}
+        loading={isLoading}
+      />
     </div>
   );
 };

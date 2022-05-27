@@ -137,23 +137,22 @@ export default function MiniDrawer() {
         PaperProps={{
           sx: {
             backgroundColor: "#0b2745",
-            color: "red",
           },
         }}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
-              <ChevronRightIcon color="primary" />
+              <ChevronRightIcon />
             ) : (
-              <ChevronLeftIcon color="primary" />
+              <ChevronLeftIcon />
             )}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
-            <Link to="/" style={{ color: "#ffffff", textDecoration: "none" }}>
+            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,

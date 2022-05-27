@@ -23,36 +23,36 @@ const center = {
 const MapsComponentDash = () => {
   const [AllAsset, setAllAsset] = useState([]);
   const [Loading, setLoading] = useState(false);
-  const componentMounted = useRef(true); // (3) component is mounted
+  // const componentMounted = useRef(true); // (3) component is mounted
 
   useEffect(() => {
     async function getAllAssets() {
       try {
         setLoading(true);
-        const AllAsset = await axios.get(
+        const response = await axios.get(
           " https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/allassets"
         );
-        if (componentMounted.current) {
-          setAllAsset(AllAsset.data);
-          setLoading(false);
-        }
 
-        return () => {
-          // This code runs when component is unmounted
-          componentMounted.current = false;
-        };
+        const AllAsset = await response.data;
+        // if (componentMounted.current) {
+        setAllAsset(AllAsset);
+        setLoading(false);
+
+        // return () => {
+        //   // This code runs when component is unmounted
+        //   componentMounted.current = false;
+        // };
       } catch (error) {
         console.log("ERROR DMAp");
       }
     }
     getAllAssets();
-    setLoading(false);
-  }, []);
+  }, [setAllAsset]);
 
   //TODO: add spiiner for loading
-  return Loading ? (
-    <CircularColor />
-  ) : (
+  return (
+    //   <CircularColor color="secondary" />
+    // ) : (
     <div className="mapDash">
       <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
         <GoogleMap

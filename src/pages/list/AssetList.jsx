@@ -10,7 +10,6 @@ const AssetList = () => {
     <div className="list">
       <MiniDrawer />
       <div className="listContainer">
-        <Navbar />
         <DataTable></DataTable>
         {/* <Table></Table> */}
       </div>

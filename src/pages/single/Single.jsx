@@ -6,8 +6,8 @@ import Chart from "../../components/chart/Chart";
 import DataTable from "../../components/datatable/DataTable";
 import React from "react";
 import MapsComponent from "../../components/map/Map";
+import CircularProgress from "@mui/material/CircularProgress";
 import MiniDrawer from "../../components/sidebar/sidebar2coll2";
-
 import {
   Typography,
   Box,
@@ -18,7 +18,6 @@ import {
 } from "@material-ui/core";
 
 import { useParams } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import {
   GoogleMap,
@@ -43,6 +42,7 @@ const Single = () => {
 
   const [SingleAsset, setSingleAsset] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [deviceId, setdeviceId] = useState(null);
 
   //API call for single asset info fetch
   useEffect(() => {
@@ -53,13 +53,17 @@ const Single = () => {
           `https://4n53lh55nc.execute-api.ap-south-1.amazonaws.com/prod/asset?assetSerialNumber=${assetSerialNumber}&assetName=${assetName}`
         );
         setSingleAsset(SingleAsset.data);
+        setdeviceId(SingleAsset.data.deviceSerialNumber);
       } catch (error) {
         console.log("ERROR");
       }
     }
     getSingleAsset();
+
     setLoading(false);
   }, []);
+
+  console.log(deviceId);
 
   const latitudeStart = parseFloat(SingleAsset.startLocationLatitude, 10);
   const longitudeStart = parseFloat(SingleAsset.startLocationLongitude, 10);
@@ -88,26 +92,19 @@ const Single = () => {
       try {
         setLoadingBluePath(true);
         const BluePath = await axios.get(
-          "https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/trackhistory?deviceSerialNumber=50bb3998601240ab96ecaff7a0bf562a"
+          `https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/trackhistory?deviceSerialNumber=${deviceId}`
         );
 
-        if (componentMounted.current) {
-          setaddBluePath(BluePath.data.path);
-          //data.path is necessary
-          setLoadingBluePath(false);
-          // console.log(BluePath.data.path[0].Latitude);
-        }
-
-        return () => {
-          // This code runs when component is unmounted
-          componentMounted.current = false;
-        };
+        setaddBluePath(BluePath.data.path);
+        //data.path is necessary
+        setLoadingBluePath(false);
+        // console.log(BluePath.data.path[0].Latitude);
       } catch (error) {
         console.log("ERROR 2");
       }
     }
     getBluePath();
-  }, []);
+  }, [deviceId]);
 
   const onLoad = (marker) => {
     // console.log("marker: ", marker);
@@ -134,11 +131,16 @@ const Single = () => {
     height: "350px",
   };
 
-  return (
+  return isLoading ? (
+    <div className="loader">
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress color="secondary" />
+      </Box>
+    </div>
+  ) : (
     <div className="single">
       <MiniDrawer />
       <div className="singleContainer">
-        <Navbar />
         <div className="top">
           <div className="left">
             <div className="editButton">Edit</div>
@@ -199,7 +201,17 @@ const Single = () => {
         {/* for the time putting map here will make component when get api single  */}
         <div className="bottom">
           <div>{}</div>
+
+          {/* //TODO: extract to component */}
           <h1 className="title">Location History</h1>
+          {/* {!deviceId ? (
+            <div className="loader">
+              <Box sx={{ display: "flex" }}>
+                Loading Map ...
+                <CircularProgress color="secondary" />
+              </Box>
+            </div>
+          ) : ( */}
           <div className="map">
             <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
               <GoogleMap

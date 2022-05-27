@@ -18,11 +18,13 @@ const Home = () => {
     <div className="home">
       <MiniDrawer />
       <div className="homeContainer">
+        <div className="widgets">{/* <Widget type="order" /> */}</div>
         <div className="listContainer">
-          <div className="listTitle">All Asset Location</div>
-          <MapsComponentDash></MapsComponentDash>
+          <div>
+            <div className="listTitle">All Asset Location</div>
+            <MapsComponentDash></MapsComponentDash>
+          </div>
         </div>
-        <div className="widgets"></div>
       </div>
     </div>
   );
