@@ -1,7 +1,7 @@
 import "./list.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import DataTable from "../../components/datatable/DataTable";
+import DataTable from "../../components/datatable/DataTable.jsx";
 import Table from "../../components/table/Table";
 import MiniDrawer from "../../components/sidebar/sidebar2coll2";
 

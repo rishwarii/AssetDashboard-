@@ -30,8 +30,8 @@ import {
 
 import axios from "axios";
 import { useTheme } from "@emotion/react";
-import { marker } from "leaflet";
 
+import { LiveTracking, LiveView } from "../../components/map/liveLocation";
 const Single = () => {
   const { assetSerialNumber, assetName } = useParams();
 
@@ -63,7 +63,7 @@ const Single = () => {
     setLoading(false);
   }, []);
 
-  console.log(deviceId);
+  // console.log(deviceId);
 
   const latitudeStart = parseFloat(SingleAsset.startLocationLatitude, 10);
   const longitudeStart = parseFloat(SingleAsset.startLocationLongitude, 10);
@@ -130,6 +130,15 @@ const Single = () => {
     width: "700px",
     height: "350px",
   };
+
+  const clientID = deviceId;
+
+  //LIVE LOCATION : here
+
+  // const positionUpdate = {
+  //   lat: parseFloat(liveLoc.Latitude),
+  //   lng: parseFloat(liveLoc.Longitude),
+  // };
 
   return isLoading ? (
     <div className="loader">
@@ -242,8 +251,12 @@ const Single = () => {
             </LoadScript>
           </div>
         </div>
+        {/* THIS IS :IVE TRACKIGGG */}
         <div className="bottom">
-          <h1 className="title">Other Assets</h1>
+          <h1 className="title">Live Tracking</h1>
+          <div className="map">
+            <LiveTracking></LiveTracking>{" "}
+          </div>
         </div>
       </div>
     </div>

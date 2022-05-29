@@ -36,11 +36,20 @@ const DataTable = () => {
     getAllAssets();
   }, []);
 
-  //handle delelte function
+  //  handle delelte function
 
-  // const handleDelete = async => {
-  //    await axios.delete("https://4n53lh55nc.execute-api.ap-south-1.amazonaws.com/prod/asset?assetSerialNumber=asset0003&assetName=Car0003")
-  // }
+  const handleDelete = async (assetSerialNumber, assetName) => {
+    await axios.delete(
+      `https://4n53lh55nc.execute-api.ap-south-1.amazonaws.com/prod/asset?assetSerialNumber=${assetSerialNumber}&assetName=${assetName}`
+    );
+
+    var remainingAssets = Assets.filter((item) => {
+      console.log(item);
+      return item.assetSerialNumber !== assetSerialNumber;
+    });
+
+    setAssets(remainingAssets);
+  };
 
   const actionColumn = [
     {
@@ -59,7 +68,9 @@ const DataTable = () => {
             </Link>
             <div
               className="deleteButton"
-              // onClick={() => handleDelete(params.row.id)}
+              onClick={() =>
+                handleDelete(params.row.assetSerialNumber, params.row.assetName)
+              }
             >
               Delete
             </div>
